@@ -43,7 +43,7 @@
         <button
           class="add-btn"
           :disabled="product.stock === 0"
-          @click="$emit('add-to-cart', { product, quantity })"
+          @click="onAdd"
         >
           {{ product.stock === 0 ? '已缺货' : '加入购物车' }}
         </button>
@@ -65,9 +65,11 @@
 <script setup>
 import { ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
+import { ElMessage } from 'element-plus'
 import { productApi } from '../api/products.js'
+import { useCartStore } from '../stores/cart.js'
 
-defineEmits(['add-to-cart'])
+const cart = useCartStore()
 const route = useRoute()
 
 const product = ref(null)
@@ -101,6 +103,12 @@ function clampQty() {
   if (!product.value) return
   if (!Number.isFinite(quantity.value)) quantity.value = 1
   changeQty(quantity.value)
+}
+
+function onAdd() {
+  if (!product.value || product.value.stock === 0) return
+  cart.addItem(product.value, quantity.value)
+  ElMessage.success(`已加入购物车：${product.value.name} × ${quantity.value}`)
 }
 
 watch(

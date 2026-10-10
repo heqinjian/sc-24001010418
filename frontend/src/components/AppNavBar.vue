@@ -25,7 +25,7 @@
       <div class="navbar__actions">
         <router-link to="/cart" class="cart-link">
           <span>购物车</span>
-          <span v-if="cartCount > 0" class="cart-badge">{{ cartCount }}</span>
+          <span v-if="cart.count > 0" class="cart-badge">{{ cart.count }}</span>
         </router-link>
         <router-link to="/login" class="action-btn">登录</router-link>
         <router-link to="/register" class="action-btn action-btn--primary">注册</router-link>
@@ -35,17 +35,13 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { useCartStore } from '../stores/cart.js'
 
-// S2: cart count is a placeholder; real Pinia store arrives in S5.
-const props = defineProps({
-  cartCount: { type: Number, default: 0 }
-})
+const cart = useCartStore()
 const keyword = ref('')
 const router = useRouter()
-
-const cartCount = computed(() => props.cartCount)
 
 function onSearch() {
   router.push({ path: '/products', query: keyword.value ? { keyword: keyword.value } : {} })
