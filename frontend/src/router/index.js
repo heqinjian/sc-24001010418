@@ -9,6 +9,8 @@ const routes = [
       { path: '', name: 'home', component: () => import('../views/HomeView.vue') },
       { path: 'products', name: 'products', component: () => import('../views/ProductsView.vue') },
       { path: 'products/:id', name: 'product-detail', component: () => import('../views/ProductDetailView.vue') },
+      { path: 'guides/:id', name: 'guide', component: () => import('../views/GuideView.vue') },
+      { path: 'help/:doc', name: 'help', component: () => import('../views/HelpView.vue') },
       { path: 'cart', name: 'cart', component: () => import('../views/CartView.vue') },
       {
         path: 'checkout',

@@ -7,12 +7,12 @@
       </router-link>
 
       <nav class="navbar__links">
-        <router-link to="/" exact-active-class="is-active">首页</router-link>
-        <router-link to="/products" active-class="is-active">商品</router-link>
-        <router-link to="/products?categoryId=1" active-class="is-active">3D 打印机</router-link>
-        <router-link to="/products?categoryId=2" active-class="is-active">耗材</router-link>
-        <router-link to="/products?categoryId=3" active-class="is-active">配件</router-link>
-        <router-link to="/products?categoryId=4" active-class="is-active">扫描仪</router-link>
+        <router-link to="/" :class="{ 'is-active': isHome }">首页</router-link>
+        <router-link to="/products" :class="{ 'is-active': isAllProducts }">商品</router-link>
+        <router-link to="/products?categoryId=1" :class="{ 'is-active': isCat(1) }">3D 打印机</router-link>
+        <router-link to="/products?categoryId=2" :class="{ 'is-active': isCat(2) }">耗材</router-link>
+        <router-link to="/products?categoryId=3" :class="{ 'is-active': isCat(3) }">配件</router-link>
+        <router-link to="/products?categoryId=4" :class="{ 'is-active': isCat(4) }">扫描仪</router-link>
       </nav>
 
       <div class="navbar__search" @keydown.enter="onSearch">
@@ -32,6 +32,7 @@
 
         <template v-if="auth.isLoggedIn">
           <router-link v-if="auth.isAdmin" to="/admin" class="action-btn">后台</router-link>
+          <router-link to="/orders" class="action-btn">我的订单</router-link>
           <span class="username">{{ auth.user?.username }}</span>
           <button class="action-btn" @click="onLogout">退出</button>
         </template>
@@ -45,8 +46,8 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
-import { useRouter } from 'vue-router'
+import { ref, computed, onMounted } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 import { useCartStore } from '../stores/cart.js'
 import { useAuthStore } from '../stores/auth.js'
 
@@ -54,6 +55,19 @@ const cart = useCartStore()
 const auth = useAuthStore()
 const keyword = ref('')
 const router = useRouter()
+const route = useRoute()
+
+// Active state must consider both path and the categoryId query, otherwise
+// every /products?categoryId=* link would match together (prefix matching).
+const isHome = computed(() => route.path === '/')
+const isAllProducts = computed(
+  () => route.path === '/products' && !route.query.categoryId
+)
+function isCat(id) {
+  return computed(
+    () => route.path === '/products' && Number(route.query.categoryId) === id
+  )
+}
 
 onMounted(() => {
   if (auth.isLoggedIn) auth.fetchMe()

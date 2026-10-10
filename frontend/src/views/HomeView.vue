@@ -38,12 +38,13 @@
         <router-link
           v-for="t in tutorials"
           :key="t.title"
-          to="/products"
+          :to="`/guides/${t.id}`"
           class="tutorial-card"
         >
           <div class="tutorial-card__num">{{ t.no }}</div>
           <h3>{{ t.title }}</h3>
           <p>{{ t.desc }}</p>
+          <span class="tutorial-card__more">阅读全文 →</span>
         </router-link>
       </div>
     </section>
@@ -80,9 +81,9 @@ const trustItems = [
 ]
 
 const tutorials = [
-  { no: '01', title: '如何选第一台 3D 打印机', desc: 'FDM 与光固化的区别、成型体积与喷嘴温度怎么看。' },
-  { no: '02', title: 'PLA / ABS / PETG 怎么选', desc: '从打印难度、温度、后处理三个维度快速决策。' },
-  { no: '03', title: '常见故障排查', desc: '堵头、翘边、拉丝、层纹的现场处理办法。' }
+  { id: 1, no: '01', title: '如何选第一台 3D 打印机', desc: 'FDM 与光固化的区别、成型体积与喷嘴温度怎么看。' },
+  { id: 2, no: '02', title: 'PLA / ABS / PETG 怎么选', desc: '从打印难度、温度、后处理三个维度快速决策。' },
+  { id: 3, no: '03', title: '常见故障排查', desc: '堵头、翘边、拉丝、层纹的现场处理办法。' }
 ]
 
 const faqs = [
@@ -164,6 +165,7 @@ onMounted(async () => {
 .tutorial-card__num { font-size: 22px; font-weight: 800; color: var(--ph-primary); opacity: .4; }
 .tutorial-card h3 { font-size: 15px; margin: 6px 0; }
 .tutorial-card p { font-size: 13px; color: #6b7280; line-height: 1.6; margin: 0; }
+.tutorial-card__more { display: inline-block; margin-top: 10px; font-size: 12px; color: var(--ph-primary); }
 
 .faq { max-width: 1200px; margin: 48px auto 60px; padding: 0 20px; }
 .faq-item {

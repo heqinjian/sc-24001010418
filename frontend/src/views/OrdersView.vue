@@ -67,6 +67,7 @@ h1 { font-size: 24px; }
 .order-card__top, .order-card__bottom { display: flex; justify-content: space-between; align-items: center; }
 .no { font-size: 14px; font-weight: 600; }
 .status { font-size: 12px; padding: 2px 10px; border-radius: 999px; background: #fef3c7; color: #b45309; }
+.status[data-status="paid"], .status[data-status="shipped"] { background: #dbeafe; color: #1d4ed8; }
 .status[data-status="completed"] { background: #dcfce7; color: #15803d; }
 .status[data-status="cancelled"] { background: #fee2e2; color: #b91c1c; }
 .order-card__bottom { margin-top: 10px; font-size: 13px; color: #6b7280; }

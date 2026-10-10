@@ -9,9 +9,13 @@
       <section class="block">
         <div class="head">
           <h1>订单 {{ order.order_no }}</h1>
-          <span class="status">{{ statusText(order.status) }}</span>
+          <span class="status" :data-status="order.status">{{ statusText(order.status) }}</span>
         </div>
         <p class="meta">下单时间：{{ order.created_at }}</p>
+        <div v-if="order.status === 'pending'" class="pay-note">
+          订单已成功生成。本项目为课程演示，暂不接入在线支付，您可在
+          <router-link to="/orders">我的订单</router-link> 中随时查看，无需实际付款。
+        </div>
       </section>
 
       <section class="block">
@@ -79,6 +83,13 @@ onMounted(async () => {
 .head { display: flex; justify-content: space-between; align-items: center; }
 .head h1 { font-size: 20px; margin: 0; }
 .status { font-size: 12px; padding: 3px 12px; border-radius: 999px; background: #fef3c7; color: #b45309; }
+.status[data-status="completed"] { background: #dcfce7; color: #15803d; }
+.status[data-status="cancelled"] { background: #fee2e2; color: #b91c1c; }
+.pay-note {
+  margin-top: 12px; padding: 10px 14px; border-radius: 8px;
+  background: #eff6ff; color: #1d4ed8; font-size: 13px; line-height: 1.7;
+}
+.pay-note a { color: var(--ph-primary); }
 .meta { font-size: 13px; color: #6b7280; margin: 8px 0 0; }
 h2 { font-size: 15px; margin: 0 0 10px; }
 p { font-size: 14px; color: #4b5563; margin: 4px 0; }

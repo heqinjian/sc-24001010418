@@ -7,16 +7,16 @@
       </div>
       <div class="footer__col">
         <h4>帮助</h4>
-        <a href="#">配送说明</a>
-        <a href="#">退换政策</a>
-        <a href="#">联系客服</a>
+        <router-link to="/help/shipping">配送说明</router-link>
+        <router-link to="/help/returns">退换政策</router-link>
+        <router-link to="/help/contact">联系客服</router-link>
       </div>
       <div class="footer__col">
         <h4>分类</h4>
-        <a href="#">3D 打印机</a>
-        <a href="#">打印耗材</a>
-        <a href="#">打印配件</a>
-        <a href="#">3D 扫描设备</a>
+        <router-link to="/products?categoryId=1">3D 打印机</router-link>
+        <router-link to="/products?categoryId=2">打印耗材</router-link>
+        <router-link to="/products?categoryId=3">打印配件</router-link>
+        <router-link to="/products?categoryId=4">3D 扫描设备</router-link>
       </div>
     </div>
     <div class="footer__bar">© 2026 PrintHub · 课程演示项目，非真实交易平台</div>
@@ -47,6 +47,7 @@
   font-size: 13px;
   padding: 3px 0;
 }
+.footer__col a:hover { color: #fff; }
 .footer__bar {
   border-top: 1px solid #1f2937;
   text-align: center;
