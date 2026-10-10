@@ -27,24 +27,43 @@
           <span>购物车</span>
           <span v-if="cart.count > 0" class="cart-badge">{{ cart.count }}</span>
         </router-link>
-        <router-link to="/login" class="action-btn">登录</router-link>
-        <router-link to="/register" class="action-btn action-btn--primary">注册</router-link>
+
+        <template v-if="auth.isLoggedIn">
+          <router-link v-if="auth.isAdmin" to="/admin" class="action-btn">后台</router-link>
+          <span class="username">{{ auth.user?.username }}</span>
+          <button class="action-btn" @click="onLogout">退出</button>
+        </template>
+        <template v-else>
+          <router-link to="/login" class="action-btn">登录</router-link>
+          <router-link to="/register" class="action-btn action-btn--primary">注册</router-link>
+        </template>
       </div>
     </div>
   </header>
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useCartStore } from '../stores/cart.js'
+import { useAuthStore } from '../stores/auth.js'
 
 const cart = useCartStore()
+const auth = useAuthStore()
 const keyword = ref('')
 const router = useRouter()
 
+onMounted(() => {
+  if (auth.isLoggedIn) auth.fetchMe()
+})
+
 function onSearch() {
   router.push({ path: '/products', query: keyword.value ? { keyword: keyword.value } : {} })
+}
+
+function onLogout() {
+  auth.logout()
+  router.push('/')
 }
 </script>
 
@@ -142,6 +161,7 @@ function onSearch() {
   color: #fff;
 }
 .action-btn--primary:hover { filter: brightness(1.05); }
+.username { font-size: 14px; color: var(--ph-text); font-weight: 600; }
 
 @media (max-width: 768px) {
   .navbar__links, .navbar__search { display: none; }

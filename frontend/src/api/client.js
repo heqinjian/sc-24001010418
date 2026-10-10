@@ -6,6 +6,13 @@ const api = axios.create({
   timeout: 10000
 })
 
+// Attach JWT from localStorage if present.
+api.interceptors.request.use((config) => {
+  const token = localStorage.getItem('printhub-token')
+  if (token) config.headers.Authorization = `Bearer ${token}`
+  return config
+})
+
 // Unwrap our unified envelope; throw on failure with the server message.
 api.interceptors.response.use(
   (res) => res.data,
