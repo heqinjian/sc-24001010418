@@ -32,8 +32,13 @@ const routes = [
       { path: 'register', name: 'register', component: () => import('../views/RegisterView.vue'), meta: { guestOnly: true } },
       {
         path: 'admin',
-        component: () => import('../views/PlaceholderView.vue'),
-        meta: { title: '管理后台', requiresAuth: true, requiresAdmin: true }
+        component: () => import('../layouts/AdminLayout.vue'),
+        meta: { requiresAuth: true, requiresAdmin: true },
+        children: [
+          { path: '', name: 'admin', component: () => import('../views/admin/AdminHome.vue') },
+          { path: 'products', name: 'admin-products', component: () => import('../views/admin/AdminProducts.vue') },
+          { path: 'orders', name: 'admin-orders', component: () => import('../views/admin/AdminOrders.vue') }
+        ]
       }
     ]
   }
