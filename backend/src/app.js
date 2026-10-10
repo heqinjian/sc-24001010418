@@ -8,6 +8,7 @@ import { seedIfEmpty } from './database/seed.js'
 import productRoutes from './routes/products.js'
 import categoryRoutes from './routes/categories.js'
 import authRoutes from './routes/auth.js'
+import orderRoutes from './routes/orders.js'
 
 // Seed demo data on first boot (idempotent).
 seedIfEmpty()
@@ -25,6 +26,7 @@ app.get('/api/health', (req, res) => {
 app.use('/api/products', productRoutes)
 app.use('/api/categories', categoryRoutes)
 app.use('/api/auth', authRoutes)
+app.use('/api/orders', orderRoutes)
 
 app.use(notFound)
 app.use(errorHandler)

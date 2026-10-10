@@ -13,20 +13,20 @@ const routes = [
       {
         path: 'checkout',
         name: 'checkout',
-        component: () => import('../views/PlaceholderView.vue'),
-        meta: { title: '结算', requiresAuth: true }
+        component: () => import('../views/CheckoutView.vue'),
+        meta: { requiresAuth: true }
       },
       {
         path: 'orders',
         name: 'orders',
-        component: () => import('../views/PlaceholderView.vue'),
-        meta: { title: '我的订单', requiresAuth: true }
+        component: () => import('../views/OrdersView.vue'),
+        meta: { requiresAuth: true }
       },
       {
         path: 'orders/:id',
         name: 'order-detail',
-        component: () => import('../views/PlaceholderView.vue'),
-        meta: { title: '订单详情', requiresAuth: true }
+        component: () => import('../views/OrderDetailView.vue'),
+        meta: { requiresAuth: true }
       },
       { path: 'login', name: 'login', component: () => import('../views/LoginView.vue'), meta: { guestOnly: true } },
       { path: 'register', name: 'register', component: () => import('../views/RegisterView.vue'), meta: { guestOnly: true } },
