@@ -4,6 +4,12 @@ import express from 'express'
 import cors from 'cors'
 import config from './config/index.js'
 import { notFound, errorHandler } from './middleware/error.js'
+import { seedIfEmpty } from './database/seed.js'
+import productRoutes from './routes/products.js'
+import categoryRoutes from './routes/categories.js'
+
+// Seed demo data on first boot (idempotent).
+seedIfEmpty()
 
 const app = express()
 
@@ -15,10 +21,8 @@ app.get('/api/health', (req, res) => {
   res.json({ success: true, data: { service: 'printhub-backend', status: 'ok' }, message: 'ok' })
 })
 
-// Placeholder for future routers (mounted in later stages)
-// app.use('/api/products', productRoutes)
-// app.use('/api/auth', authRoutes)
-// app.use('/api/orders', orderRoutes)
+app.use('/api/products', productRoutes)
+app.use('/api/categories', categoryRoutes)
 
 app.use(notFound)
 app.use(errorHandler)

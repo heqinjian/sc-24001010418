@@ -8,7 +8,7 @@ const routes = [
     children: [
       { path: '', name: 'home', component: () => import('../views/HomeView.vue') },
       // Routes below are placeholders; real pages land in later stages.
-      { path: 'products', name: 'products', component: () => import('../views/PlaceholderView.vue'), meta: { title: '商品列表' } },
+      { path: 'products', name: 'products', component: () => import('../views/ProductsView.vue') },
       { path: 'products/:id', name: 'product-detail', component: () => import('../views/PlaceholderView.vue'), meta: { title: '商品详情' } },
       { path: 'cart', name: 'cart', component: () => import('../views/PlaceholderView.vue'), meta: { title: '购物车' } },
       { path: 'checkout', name: 'checkout', component: () => import('../views/PlaceholderView.vue'), meta: { title: '结算' } },

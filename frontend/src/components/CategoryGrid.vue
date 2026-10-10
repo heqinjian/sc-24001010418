@@ -3,12 +3,14 @@
     <h2 class="section-title">商品分类</h2>
     <div class="categories__grid">
       <router-link
-        v-for="c in categories"
+        v-for="(c, i) in categories"
         :key="c.id"
         :to="`/products?categoryId=${c.id}`"
         class="category-card"
       >
-        <div class="category-card__icon" :style="{ background: c.color }">{{ c.short }}</div>
+        <div class="category-card__icon" :style="{ background: colors[i % colors.length] }">
+          {{ c.name.slice(0, 1) }}
+        </div>
         <div class="category-card__name">{{ c.name }}</div>
       </router-link>
     </div>
@@ -16,13 +18,20 @@
 </template>
 
 <script setup>
-// S2: categories are dev placeholders. Real categories come from /api/categories in S3.
-const categories = [
-  { id: 1, name: '3D 打印机', short: 'P', color: '#ff6a00' },
-  { id: 2, name: '打印耗材', short: 'F', color: '#2563eb' },
-  { id: 3, name: '打印配件', short: 'A', color: '#16a34a' },
-  { id: 4, name: '3D 扫描设备', short: 'S', color: '#9333ea' }
-]
+import { ref, onMounted } from 'vue'
+import { categoryApi } from '../api/products.js'
+
+const categories = ref([])
+const colors = ['#ff6a00', '#2563eb', '#16a34a', '#9333ea']
+
+onMounted(async () => {
+  try {
+    const body = await categoryApi.list()
+    categories.value = body.data.items
+  } catch (e) {
+    // leave empty; no crash
+  }
+})
 </script>
 
 <style scoped>
