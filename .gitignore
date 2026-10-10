@@ -26,3 +26,6 @@ npm-debug.log*
 Thumbs.db
 .idea/
 .vscode/
+
+# Internal work-order (not a deliverable)
+agent.md
