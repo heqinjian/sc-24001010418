@@ -1,7 +1,17 @@
 <template>
   <router-link :to="`/products/${product.id}`" class="product-card">
-    <div class="product-card__img" :style="{ background: product.gradient }">
-      <span>{{ product.name.slice(0, 1) }}</span>
+    <div
+      class="product-card__img"
+      :style="{ background: product.gradient || '#e5e7eb' }"
+    >
+      <img
+        v-if="product.image_url"
+        :src="product.image_url"
+        :alt="product.name"
+        loading="lazy"
+        @error="onImgError"
+      />
+      <span v-if="!product.image_url">{{ product.name.slice(0, 1) }}</span>
     </div>
     <div class="product-card__body">
       <div class="product-card__name">{{ product.name }}</div>
@@ -17,6 +27,18 @@
 defineProps({
   product: { type: Object, required: true }
 })
+
+function onImgError(e) {
+  // Image failed: hide it and fall back to the letter placeholder.
+  const img = e.target
+  img.style.display = 'none'
+  const span = img.parentElement.querySelector('span')
+  if (!span) {
+    const s = document.createElement('span')
+    s.textContent = img.alt.slice(0, 1)
+    img.parentElement.appendChild(s)
+  }
+}
 </script>
 
 <style scoped>
@@ -33,10 +55,19 @@ defineProps({
 }
 .product-card:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,.08); }
 .product-card__img {
-  height: 160px;
+  height: 180px;
   display: grid;
   place-items: center;
-  color: rgba(255,255,255,.85);
+  overflow: hidden;
+}
+.product-card__img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.product-card__img span {
+  color: rgba(255,255,255,.9);
   font-size: 44px;
   font-weight: 800;
 }

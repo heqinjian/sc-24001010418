@@ -8,7 +8,7 @@ export default defineConfig({
     proxy: {
       // Forward API calls to the Express backend during development.
       '/api': {
-        target: 'http://localhost:3000',
+        target: process.env.VITE_API_PROXY || 'http://localhost:3000',
         changeOrigin: true
       }
     }

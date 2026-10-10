@@ -49,6 +49,8 @@
         <textarea v-model="form.description" rows="2"></textarea>
         <label>规格参数</label>
         <textarea v-model="form.specifications" rows="2"></textarea>
+        <label>图片地址（可选，如 /images/products/xxx.jpg）</label>
+        <input v-model="form.image_url" placeholder="留空则显示首字占位" />
       </form>
       <template #footer>
         <button @click="dialog = false">取消</button>
@@ -70,7 +72,7 @@ const loading = ref(true)
 const error = ref('')
 const dialog = ref(false)
 const editing = ref(null)
-const form = reactive({ name: '', category_id: 1, price: 0, stock: 0, description: '', specifications: '' })
+const form = reactive({ name: '', category_id: 1, price: 0, stock: 0, description: '', specifications: '', image_url: '' })
 
 async function load() {
   loading.value = true
@@ -86,7 +88,7 @@ async function load() {
 }
 
 function resetForm() {
-  Object.assign(form, { name: '', category_id: categories.value[0]?.id || 1, price: 0, stock: 0, description: '', specifications: '' })
+  Object.assign(form, { name: '', category_id: categories.value[0]?.id || 1, price: 0, stock: 0, description: '', specifications: '', image_url: '' })
 }
 
 function openCreate() {
@@ -99,7 +101,7 @@ function openEdit(p) {
   editing.value = p.id
   Object.assign(form, {
     name: p.name, category_id: p.category_id, price: p.price, stock: p.stock,
-    description: p.description, specifications: p.specifications
+    description: p.description, specifications: p.specifications, image_url: p.image_url || ''
   })
   dialog.value = true
 }

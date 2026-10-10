@@ -11,6 +11,8 @@
         <router-link to="/products" active-class="is-active">商品</router-link>
         <router-link to="/products?categoryId=1" active-class="is-active">3D 打印机</router-link>
         <router-link to="/products?categoryId=2" active-class="is-active">耗材</router-link>
+        <router-link to="/products?categoryId=3" active-class="is-active">配件</router-link>
+        <router-link to="/products?categoryId=4" active-class="is-active">扫描仪</router-link>
       </nav>
 
       <div class="navbar__search" @keydown.enter="onSearch">

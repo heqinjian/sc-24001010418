@@ -63,13 +63,14 @@ const keyword = ref(route.query.keyword || '')
 const sort = ref(route.query.sort || '')
 const selectedCategory = ref(route.query.categoryId ? Number(route.query.categoryId) : null)
 
-// Backend returns flat fields; ProductCard expects price/stock/name + gradient.
+// Backend returns flat fields; ProductCard uses image_url (with gradient fallback).
 function toCard(p) {
   return {
     id: p.id,
     name: p.name,
     price: p.price,
     stock: p.stock,
+    image_url: p.image_url || '',
     gradient: 'linear-gradient(135deg,#94a3b8,#e2e8f0)'
   }
 }
